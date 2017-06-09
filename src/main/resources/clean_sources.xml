@@ -1,9 +1,10 @@
 <?xml version="1.0"?>
 
-<project name="clean_sources" default="clean_optional_sources" basedir=".">
+<project name="clean_sources" default="clean_ant" basedir=".">
   <import file="${src.orig}/build.xml" />
-  <target name="clean_optional_sources" depends="check_for_optional_packages"
-            description="--> copies and cleans non optional code">
+  <target name="clean_ant" 
+    description="--> copies and cleans non optional code"
+    unless="${src.dest.available}">
     <copy todir="${src.dest}">
      <fileset dir="${java.dir}">
       <selector id="conditional-patterns">

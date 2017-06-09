@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+
+<project name="download_distributions" default="download_ant" basedir=".">
+  <target name="download_ant"
+          unless="${src.orig.available}">
+    <get src="https://archive.apache.org/dist/ant/source/apache-ant-1.6.2-src.zip"
+           dest="${project.build.directory}" />
+    <unzip src="${ant.zip}"
+           dest="${project.build.directory}" />
+  </target>
+</project>

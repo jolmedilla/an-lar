@@ -72,7 +72,13 @@
 			<url>http://devel.deidamia.com/archiva/repository/internal</url>
 		</repository>
 	</repositories>
-
+        <dependencies>
+          <dependency>
+            <groupId>ie.ucd</groupId>
+            <artifactId>code-imp-optimisation</artifactId>
+            <version>2.0.0</version>
+          </dependency>
+        </dependencies>
 	<build>
 		<extensions>
 			<extension>
@@ -94,21 +100,16 @@
                              <property name="src.dest" value="${build.directory}/apache-ant/src"/>
                              <property name="apache.ant" value="${project.build.directory}/apache-ant"/>
                              <property name="ant.zip" value="${project.build.directory}/apache-ant-1.6.2-src.zip"/>
-                             <get src="https://archive.apache.org/dist/ant/source/apache-ant-1.6.2-src.zip"
-                                  dest="${project.build.directory}"/>
-                             <unzip src="${ant.zip}"
-                                  dest="${project.build.directory}"/>
+                             <available property="${src.dest..available}" file="${src.dest}" type="dir"/>
+                             <available property="${src.orig.available}" file="${src.orig}" type="dir"/>
+                             <ant antfile="${basedir}/src/main/resources/download_distributions.xml"
+                                  dir="${project.build.directory}">
+                               <target name="download_ant"/>
+                             </ant>
                              <ant antfile="${basedir}/src/main/resources/clean_sources.xml"
                                   dir="${src.orig}">
-                               <target name="clean_optional_sources"/>
+                               <target name="clean_ant"/>
                              </ant>
-                             <copy todir="${apache.ant}/lib">
-                               <fileset dir="${src.orig}/lib">
-                                 <include name="*.jar"/>
-                               </fileset>
-                             </copy>
-                             <delete dir="${src.orig}"/>
-                             <delete file="${ant.zip}"/>
                            </target>
                          </configuration>
                          <goals>
