@@ -81,7 +81,42 @@
 				<version>1.0-beta-2</version>
 			</extension>
 		</extensions>
-		<plugins>
+ 		<plugins>
+                  <plugin>
+                     <artifactId>maven-antrun-plugin</artifactId>
+                     <version>1.8</version>
+                     <executions>
+                       <execution>
+                         <phase>process-resources</phase>
+                         <configuration>
+                           <target>
+                             <property name="src.orig" value="${build.directory}/apache-ant-1.6.2"/>
+                             <property name="src.dest" value="${build.directory}/apache-ant/src"/>
+                             <property name="apache.ant" value="${project.build.directory}/apache-ant"/>
+                             <property name="ant.zip" value="${project.build.directory}/apache-ant-1.6.2-src.zip"/>
+                             <get src="https://archive.apache.org/dist/ant/source/apache-ant-1.6.2-src.zip"
+                                  dest="${project.build.directory}"/>
+                             <unzip src="${ant.zip}"
+                                  dest="${project.build.directory}"/>
+                             <ant antfile="${basedir}/src/main/resources/clean_sources.xml"
+                                  dir="${src.orig}">
+                               <target name="clean_optional_sources"/>
+                             </ant>
+                             <copy todir="${apache.ant}/lib">
+                               <fileset dir="${src.orig}/lib">
+                                 <include name="*.jar"/>
+                               </fileset>
+                             </copy>
+                             <delete dir="${src.orig}"/>
+                             <delete file="${ant.zip}"/>
+                           </target>
+                         </configuration>
+                         <goals>
+                           <goal>run</goal>
+                         </goals>
+                       </execution>
+                     </executions>
+                   </plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-site-plugin</artifactId>

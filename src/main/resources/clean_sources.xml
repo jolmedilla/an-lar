@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+
+<project name="clean_sources" default="clean_optional_sources" basedir=".">
+  <import file="${src.orig}/build.xml" />
+  <target name="clean_optional_sources" depends="check_for_optional_packages"
+            description="--> copies and cleans non optional code">
+    <copy todir="${src.dest}">
+     <fileset dir="${java.dir}">
+      <selector id="conditional-patterns">
+        <not>
+          <or>
+            <selector refid="needs.jdk1.3+" unless="jdk1.3+"/>
+            <selector refid="needs.jdk1.4+" unless="jdk1.4+"/>
+            <selector refid="needs.sun.tools" />
+            <selector refid="needs.sun.uue" unless="sunuue.present"/>
+            <selector refid="needs.sun.b64" unless="base64.present"/>
+
+            <selector refid="needs.trax" unless="trax.present"/>
+            <selector refid="needs.xalan1" unless="xalan.present"/>
+            <selector refid="needs.xslp" unless="xslp.present"/>
+            <selector refid="needs.apache-resolver" unless="apache.resolver.present"/>
+            <selector refid="needs.junit" />
+            <selector refid="needs.apache-regexp"
+                      unless="apache.regexp.present"/>
+            <selector refid="needs.apache-oro" unless="apache.oro.present"/>
+            <selector refid="needs.apache-bcel" />
+            <selector refid="needs.apache-log4j" unless="log4j.present"/>
+            <selector refid="needs.commons-logging"
+                      unless="commons.logging.present"/>
+            <selector refid="needs.apache-bsf" unless="bsf.present"/>
+            <selector refid="needs.stylebook" unless="stylebook.present"/>
+            <selector refid="needs.javamail" unless="javamail.complete"/>
+            <selector refid="needs.icontract" unless="icontract.present"/>
+            <selector refid="needs.netrexx" unless="netrexx.present"/>
+            <selector refid="needs.weblogic.ejbc" unless="ejb.ejbc.present"/>
+            <selector refid="needs.weblogic.ddcreator"
+                      unless="ejb.DDCreator.present"/>
+            <selector refid="needs.weblogic.server" unless="ejb.wls.present"/>
+            <selector refid="needs.commons-net" unless="commons.net.present"/>
+            <selector refid="needs.starteam" unless="starteam.present"/>
+            <selector refid="needs.vaj" unless="vaj.present"/>
+            <selector refid="needs.antlr" unless="antlr.present"/>
+            <selector refid="needs.jmf" unless="jmf.present"/>
+            <selector refid="needs.jai" unless="jai.present"/>
+            <selector refid="needs.jdepend" unless="jdepend.present"/>
+            <selector refid="needs.swing"  unless="swing.present"/>
+            <selector refid="needs.jsch" />
+          </or>
+        </not>
+      </selector>
+     </fileset>
+    </copy>
+  </target>
+</project>
