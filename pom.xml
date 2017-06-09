@@ -1,0 +1,142 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<!-- ================================================== The Basics ==== -->
+
+	<groupId>ie.ucd</groupId>
+	<artifactId>an-lar</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<!-- ==================================== More Project Information ==== -->
+
+	<name>An lár</name>
+	<description>An investigation on Layered Architecture Repair via search based refactoring</description>
+
+	<organization>
+		<name>University College Dublin</name>
+		<url>http://www.ucd.ie</url>
+	</organization>
+
+	<scm>
+		<connection>scm:git:git@github.com/jolmedilla/an-lar.git</connection>
+		<developerConnection>scm:git:git@github.com:jolmedilla/an-lar.git</developerConnection>
+		<tag>HEAD</tag>
+		<url>https://github.com/jolmedilla/an-lar</url>
+	</scm>
+
+
+	<!-- ==================================== Maven Repo deployment Information 
+		==== -->
+
+	<distributionManagement>
+		<repository>
+			<id>deidamia.maven-site</id>
+			<name>Deidamia maven repository</name>
+			<url>dav:http://devel.deidamia.com/archiva/repository/internal/</url>
+		</repository>
+		<!-- use the following if you ARE using a snapshot version. -->
+		<snapshotRepository>
+			<id>deidamia.maven-site</id>
+			<name>Deidamia maven repository</name>
+			<url>dav:http://devel.deidamia.com/archiva/repository/snapshots/</url>
+		</snapshotRepository>
+		<site>
+			<id>deidamia.maven-site</id>
+			<name>Deidamia Maven site repository</name>
+			<url>dav:http://devel.deidamia.com/releases/an-lar/${artifactId}/${version}</url>
+		</site>
+	</distributionManagement>
+
+	<!-- ============================================== Build Settings ==== -->
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<maven.compiler.source>1.7</maven.compiler.source>
+		<maven.compiler.target>1.7</maven.compiler.target>
+	</properties>
+
+	<!-- Some needed repos for specific dependencies -->
+	<repositories>
+		<repository>
+			<id>java.net</id>
+			<url>https://maven.java.net/content/repositories/public/</url>
+		</repository>
+		<repository>
+			<id>central</id>
+			<url>http://repo1.maven.org/maven2</url>
+		</repository>
+		<!-- this repo is a private repo where a version of recoder has been uploaded -->
+		<repository>
+			<id>deidamia</id>
+			<url>http://devel.deidamia.com/archiva/repository/internal</url>
+		</repository>
+	</repositories>
+
+	<build>
+		<extensions>
+			<extension>
+				<groupId>org.apache.maven.wagon</groupId>
+				<artifactId>wagon-webdav</artifactId>
+				<version>1.0-beta-2</version>
+			</extension>
+		</extensions>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-site-plugin</artifactId>
+				<version>2.1</version>
+				<configuration>
+					<inputEncoding>UTF-8</inputEncoding>
+					<outputEncoding>UTF-8</outputEncoding>
+				</configuration>
+				<!-- Need to exclude commons-logging due to bug. See: http://jira.codehaus.org/browse/MSITE-459 -->
+				<dependencies>
+					<dependency>
+						<groupId>org.apache.maven.doxia</groupId>
+						<artifactId>doxia-module-xhtml</artifactId>
+						<version>1.1.2</version>
+						<exclusions>
+							<exclusion>
+								<groupId>commons-logging</groupId>
+								<artifactId>commons-logging</artifactId>
+							</exclusion>
+						</exclusions>
+					</dependency>
+				</dependencies>
+			</plugin>		
+                        <plugin>
+                          <groupId>org.apache.maven.plugins</groupId>
+                          <artifactId>maven-release-plugin</artifactId>
+                          <version>2.5.3</version>
+                        </plugin>
+		</plugins>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>3.1</version>
+					<executions>
+						<execution>
+							<id>default-testCompile</id>
+							<phase>test-compile</phase>
+							<goals>
+								<goal>testCompile</goal>
+							</goals>
+						</execution>
+						<execution>
+							<id>default-compile</id>
+							<phase>compile</phase>
+							<goals>
+								<goal>compile</goal>
+							</goals>
+						</execution>
+					</executions>
+					<configuration>
+						<encoding>UTF-8</encoding>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+</project>
