@@ -17,6 +17,7 @@ package ie.ucd.code_imp.experiment;
 
 import java.util.Collection;
 
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
@@ -28,7 +29,7 @@ import edu.emory.mathcs.backport.java.util.Arrays;
  *
  */
 @RunWith(Parameterized.class)
-public class SequentialIntegrationTest extends BaseIntegrationTest {
+public class SequentialIntegrationTest extends AbstractIntegrationTestBase {
 
     @SuppressWarnings("unchecked")
     @Parameters(name = "algorithm=\"{0}\", run=\"{1}\"")
@@ -36,4 +37,8 @@ public class SequentialIntegrationTest extends BaseIntegrationTest {
         return Arrays.asList(new Object[][] { { "ga", 1 }, { "ga", 2 }, { "ga", 3 } });
     }
 
+    @Test
+    public void test() throws Throwable {
+        super.testAlgorithm();
+    }
 }

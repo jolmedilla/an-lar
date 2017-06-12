@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.junit.Test;
 import org.junit.runners.Parameterized.Parameter;
 
 import ie.ucd.code_imp.Optimiser;
@@ -29,7 +28,7 @@ import ie.ucd.code_imp.Optimiser;
  * @author Juan Olmedilla Arregui
  *
  */
-public class BaseIntegrationTest {
+public class AbstractIntegrationTestBase {
 
     protected List<String> arguments = new ArrayList<String>();
     
@@ -41,25 +40,29 @@ public class BaseIntegrationTest {
     
     protected volatile Throwable uncaughtException;
 
-    BaseIntegrationTest() {
+    AbstractIntegrationTestBase() {
         arguments.addAll(Arrays.asList(new String[] { "-r",
                 "MoveClassLayer,MoveMethodLayerNoDelegation,MoveFieldLayer,MoveStaticFieldLayer",
-                "-g", "ILCOF,ILCOF_F,ILCOF_M", "-y",
-                "3:org.apache.tools.ant.taskdefs", "-y", "2:org.apache.tools.ant",
-                "-y", "1:org.apache.tools.bzip2", "-y", "1:org.apache.tools.mail",
-                "-y", "1:org.apache.tools.tar", "-y", "1:org.apache.tools.zip",
-                "-i", "target/apache-ant/src", "-l", "target/apache-ant/lib", "-a",
-                "30" }));
+                "-g", "ILCOF,ILCOF_F,ILCOF_M", 
+                "-y", "3:org.apache.tools.ant.taskdefs", 
+                "-y", "2:org.apache.tools.ant",
+                "-y", "1:org.apache.tools.bzip2", 
+                "-y", "1:org.apache.tools.mail",
+                "-y", "1:org.apache.tools.tar", 
+                "-y", "1:org.apache.tools.zip",
+                "-i", "target/apache-ant-1.6.2/src/main", 
+                "-l", "target/apache-ant-1.6.2/lib"}));
         
     }
 
     protected void extraArguments() {
         arguments.add("-o");
-        arguments.add("target/apache-ant/results/" + algorithm + "/run-" + run);
+        arguments.add("target/apache-ant-1.6.2/results/" + algorithm + "/run-" + run);
+        arguments.add("-a");
+        arguments.add(System.getProperty("duration", "30"));
         arguments.add(algorithm);
     }
 
-    @Test
     public void testAlgorithm() throws Throwable {
         extraArguments();
         Thread.setDefaultUncaughtExceptionHandler(

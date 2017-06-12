@@ -17,6 +17,7 @@ package ie.ucd.code_imp.experiment;
 
 import java.util.Collection;
 
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized.Parameters;
 
@@ -29,7 +30,7 @@ import edu.emory.mathcs.backport.java.util.Arrays;
  *
  */
 @RunWith(ParallelParameterized.class)
-public class ParallelisableIntegrationTest extends BaseIntegrationTest {
+public class ParallelisableIntegrationTest extends AbstractIntegrationTestBase {
 
     @SuppressWarnings("unchecked")
     @Parameters(name = "algorithm=\"{0}\", run=\"{1}\"")
@@ -38,4 +39,8 @@ public class ParallelisableIntegrationTest extends BaseIntegrationTest {
                 { "sa", 3 }, { "hcf", 1 }, { "hcf", 2 }, { "hcf", 3 } });
     }
 
+    @Test
+    public void test() throws Throwable {
+        super.testAlgorithm();
+    }
 }
