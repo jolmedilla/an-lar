@@ -51,5 +51,10 @@
       </selector>
      </fileset>
     </copy>
+    <copy todir="${apache.ant}/lib">
+     <fileset dir="${src.orig}/lib">
+     	<include name="*.jar"/>
+     </fileset>
+    </copy>
   </target>
 </project>

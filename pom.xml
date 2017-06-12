@@ -6,7 +6,6 @@
 	<groupId>ie.ucd</groupId>
 	<artifactId>an-lar</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
-	<packaging>pom</packaging>
 
 	<!-- ==================================== More Project Information ==== -->
 
@@ -52,8 +51,9 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<maven.compiler.source>1.7</maven.compiler.source>
-		<maven.compiler.target>1.7</maven.compiler.target>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<code.imp.version>2.0.0</code.imp.version>
 	</properties>
 
 	<!-- Some needed repos for specific dependencies -->
@@ -76,8 +76,24 @@
           <dependency>
             <groupId>ie.ucd</groupId>
             <artifactId>code-imp-optimisation</artifactId>
-            <version>2.0.0</version>
+            <version>${code.imp.version}</version>
           </dependency>
+          <dependency>
+          	<groupId>ie.ucd</groupId>
+          	<artifactId>code-imp-recoder-impl</artifactId>
+          	<version>${code.imp.version}</version>
+          </dependency>
+          <dependency>
+          	<groupId>com.googlecode.junit-toolbox</groupId>
+          	<artifactId>junit-toolbox</artifactId>
+          	<version>2.2</version>
+          </dependency>
+
+        	<dependency>
+        		<groupId>junit</groupId>
+        		<artifactId>junit</artifactId>
+        		<version>4.12</version>
+        	</dependency>
         </dependencies>
 	<build>
 		<extensions>
@@ -88,36 +104,36 @@
 			</extension>
 		</extensions>
  		<plugins>
-                  <plugin>
-                     <artifactId>maven-antrun-plugin</artifactId>
-                     <version>1.8</version>
-                     <executions>
-                       <execution>
-                         <phase>process-resources</phase>
-                         <configuration>
-                           <target>
-                             <property name="src.orig" value="${build.directory}/apache-ant-1.6.2"/>
-                             <property name="src.dest" value="${build.directory}/apache-ant/src"/>
-                             <property name="apache.ant" value="${project.build.directory}/apache-ant"/>
-                             <property name="ant.zip" value="${project.build.directory}/apache-ant-1.6.2-src.zip"/>
-                             <available property="${src.dest..available}" file="${src.dest}" type="dir"/>
-                             <available property="${src.orig.available}" file="${src.orig}" type="dir"/>
-                             <ant antfile="${basedir}/src/main/resources/download_distributions.xml"
-                                  dir="${project.build.directory}">
-                               <target name="download_ant"/>
-                             </ant>
-                             <ant antfile="${basedir}/src/main/resources/clean_sources.xml"
-                                  dir="${src.orig}">
-                               <target name="clean_ant"/>
-                             </ant>
-                           </target>
-                         </configuration>
-                         <goals>
-                           <goal>run</goal>
-                         </goals>
-                       </execution>
-                     </executions>
-                   </plugin>
+           <plugin>
+              <artifactId>maven-antrun-plugin</artifactId>
+              <version>1.8</version>
+              <executions>
+                <execution>
+                  <phase>process-resources</phase>
+                  <configuration>
+                    <target>
+                      <property name="src.orig" value="${build.directory}/apache-ant-1.6.2"/>
+                      <property name="src.dest" value="${build.directory}/apache-ant/src"/>
+                      <property name="apache.ant" value="${project.build.directory}/apache-ant"/>
+                      <property name="ant.zip" value="${project.build.directory}/apache-ant-1.6.2-src.zip"/>
+                      <available property="${src.dest..available}" file="${src.dest}" type="dir"/>
+                      <available property="${src.orig.available}" file="${src.orig}" type="dir"/>
+                      <ant antfile="${basedir}/src/main/resources/download_distributions.xml"
+                           dir="${project.build.directory}">
+                        <target name="download_ant"/>
+                      </ant>
+                      <ant antfile="${basedir}/src/main/resources/clean_sources.xml"
+                           dir="${src.orig}">
+                        <target name="clean_ant"/>
+                      </ant>
+                    </target>
+                  </configuration>
+                  <goals>
+                    <goal>run</goal>
+                  </goals>
+                </execution>
+              </executions>
+            </plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-site-plugin</artifactId>
@@ -141,11 +157,11 @@
 					</dependency>
 				</dependencies>
 			</plugin>		
-                        <plugin>
-                          <groupId>org.apache.maven.plugins</groupId>
-                          <artifactId>maven-release-plugin</artifactId>
-                          <version>2.5.3</version>
-                        </plugin>
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-release-plugin</artifactId>
+              <version>2.5.3</version>
+            </plugin>
 		</plugins>
 		<pluginManagement>
 			<plugins>
@@ -172,6 +188,32 @@
 						<encoding>UTF-8</encoding>
 					</configuration>
 				</plugin>
+			    <plugin>
+			     <groupId>org.eclipse.m2e</groupId>
+			     <artifactId>lifecycle-mapping</artifactId>
+			     <version>1.0.0</version>
+			     <configuration>
+			       <lifecycleMappingMetadata>
+			         <pluginExecutions>
+			           <pluginExecution>
+			             <pluginExecutionFilter>
+			               <groupId>org.apache.maven.plugins</groupId>
+			               <artifactId>maven-antrun-plugin</artifactId>
+			               <versionRange>[1.8,)</versionRange>
+			               <goals>
+			                 <goal>run</goal>
+			               </goals>
+			             </pluginExecutionFilter>
+			             <action>
+			               <execute>
+			                 <runOnIncremental>false</runOnIncremental>
+			               </execute >
+			             </action>
+			           </pluginExecution>
+			         </pluginExecutions>
+			       </lifecycleMappingMetadata>
+			     </configuration>
+			    </plugin>				
 			</plugins>
 		</pluginManagement>
 	</build>

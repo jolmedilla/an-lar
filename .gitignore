@@ -37,3 +37,8 @@ local.properties
 
 # Maven
 target/
+
+# Executions
+*.log
+*.lck
+jMetal.log.*
